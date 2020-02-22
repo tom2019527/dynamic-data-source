@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "spring.datasource.master",
+    "type": "java.util.Map",
+    "description": "A description for 'spring.datasource.master'"
+  },
+  {
+    "name": "spring.datasource.slave",
+    "type": "java.util.Map",
+    "description": "A description for 'spring.datasource.slave'"
+  }
+]}

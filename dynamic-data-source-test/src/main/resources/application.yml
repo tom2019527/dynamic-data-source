@@ -1,0 +1,27 @@
+server:
+  port: 8080
+  
+spring:  datasource:
+    master:       hikari:        auto-commit: true
+        connection-init-sql: select 1 from dual
+        connection-test-query: select 1 from dual
+        driver-class-name: oracle.jdbc.OracleDriver
+        jdbc-url: jdbc:oracle:thin:@10.8.91.55:1521:TCG
+        password: Aa123456
+        username: TCG_ODSDB
+    slave: 
+      hikari:
+        auto-commit: true
+        connection-init-sql: select 1 from dual
+        connection-test-query: select 1 from dual
+        driver-class-name: oracle.jdbc.OracleDriver
+        jdbc-url: jdbc:oracle:thin:@10.8.91.100:1521:TCG
+        password: CCDMd3ET
+        username: TCG_ODSDB
+        
+        
+mybatis:  type-aliases-package: com.tcg.dynamic.data.source.model
+    
+  configuration:    default-fetch-size: 10   
+    map-underscore-to-camel-case: true    
+    
