@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Primary;
 
 import com.tcg.dynamic.data.source.DynamicDataSource;
@@ -22,7 +23,7 @@ public class DataSourceConfig {
     private static final Logger log = LoggerFactory.getLogger(DataSourceConfig.class);
 
     @Bean
-    @Primary
+    @Qualifier("masterDataSource")
     @ConfigurationProperties(prefix = "spring.datasource.master.hikari")
     public DataSource masterDataSource() {
         HikariDataSource ds = new HikariDataSource();
@@ -31,6 +32,7 @@ public class DataSourceConfig {
     }
 
     @Bean
+    @Qualifier("slaveDataSource")
     @ConfigurationProperties(prefix = "spring.datasource.slave.hikari")
     public DataSource slaveDataSource() {
         HikariDataSource ds = new HikariDataSource();
@@ -39,15 +41,17 @@ public class DataSourceConfig {
     }
 
     @Bean
-    public DataSource dataSource(@Qualifier("masterDataSource") DataSource masterDataSource, @Qualifier("slaveDataSource") DataSource slaveDataSource) {
+    @Primary
+    @DependsOn(value = { "masterDataSource", "slaveDataSource" })
+    public DataSource dataSource(@Qualifier("masterDataSource") DataSource masterDataSource,
+            @Qualifier("slaveDataSource") DataSource slaveDataSource) {
         log.info("masterDataSource init completed, url={}", ((HikariDataSource) masterDataSource).getJdbcUrl());
         log.info("slaveDataSource init completed, url={}", ((HikariDataSource) slaveDataSource).getJdbcUrl());
 
         DynamicDataSource dataSource = new DynamicDataSource();
-
         Map<Object, Object> targetDataSources = new HashMap<>();
-        targetDataSources.put("slave", slaveDataSource);
         targetDataSources.put("master", masterDataSource);
+        targetDataSources.put("slave", slaveDataSource);
 
         dataSource.setTargetDataSources(targetDataSources);
 

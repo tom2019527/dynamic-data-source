@@ -2,22 +2,41 @@ server:
   port: 8080
   
 spring:  datasource:
-    master:       hikari:        auto-commit: true
+#     master: #       hikari:#         auto-commit: true
+#         connection-init-sql: select 1 from dual
+#         connection-test-query: select 1 from dual
+#         driver-class-name: oracle.jdbc.OracleDriver
+#         jdbc-url: jdbc:oracle:thin:@10.8.91.55:1521:TCG
+#         password: Aa123456
+#         username: TCG_ODSDB
+#     slave: 
+#       hikari:
+#         auto-commit: true
+#         connection-init-sql: select 1 from dual
+#         connection-test-query: select 1 from dual
+#         driver-class-name: oracle.jdbc.OracleDriver
+#         jdbc-url: jdbc:oracle:thin:@10.8.91.100:1521:TCG
+#         password: CCDMd3ET
+#         username: TCG_ODSDB
+        
+    master: 
+      hikari:
+        auto-commit: true
         connection-init-sql: select 1 from dual
         connection-test-query: select 1 from dual
-        driver-class-name: oracle.jdbc.OracleDriver
-        jdbc-url: jdbc:oracle:thin:@10.8.91.55:1521:TCG
-        password: Aa123456
-        username: TCG_ODSDB
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://localhost:3306/sys?autoReconnect=true&useUnicode=true&createDatabaseIfNotExist=false&characterEncoding=utf8&useSSL=true&serverTimezone=Asia/Shanghai
+        password: 
+        username: root
     slave: 
       hikari:
         auto-commit: true
         connection-init-sql: select 1 from dual
         connection-test-query: select 1 from dual
-        driver-class-name: oracle.jdbc.OracleDriver
-        jdbc-url: jdbc:oracle:thin:@10.8.91.100:1521:TCG
-        password: CCDMd3ET
-        username: TCG_ODSDB
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://localhost:3306/mysql?autoReconnect=true&useUnicode=true&createDatabaseIfNotExist=false&characterEncoding=utf8&useSSL=true&serverTimezone=Asia/Shanghai
+        password: 
+        username: root
         
         
 mybatis:  type-aliases-package: com.tcg.dynamic.data.source.model

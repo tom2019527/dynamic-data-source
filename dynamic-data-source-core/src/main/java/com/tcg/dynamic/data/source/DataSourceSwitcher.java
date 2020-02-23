@@ -6,11 +6,11 @@ import org.springframework.util.Assert;
 
 public class DataSourceSwitcher {
     private static final Logger log = LoggerFactory.getLogger(DataSourceSwitcher.class);
-    private static final ThreadLocal<String> dataSourceNameHolder = new ThreadLocal<>();
+    private static final ThreadLocal<String> dataSourceTypeHolder = new ThreadLocal<>();
 
     public static void setDataSource(String dataSource) {
         Assert.notNull(dataSource, "dataSource cannot be null");
-        dataSourceNameHolder.set(dataSource);
+        dataSourceTypeHolder.set(dataSource);
     }
 
     public static void setMaster(){
@@ -22,11 +22,11 @@ public class DataSourceSwitcher {
     }
 
     public static String getDataSource() {
-        log.info("dataSource={}", dataSourceNameHolder.get());
-        return dataSourceNameHolder.get();
+        log.info("dataSource={}", dataSourceTypeHolder.get());
+        return dataSourceTypeHolder.get();
     }
 
     public static void clearDataSource() {
-        dataSourceNameHolder.remove();
+        dataSourceTypeHolder.remove();
     }
 }

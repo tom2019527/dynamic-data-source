@@ -13,5 +13,5 @@ import java.lang.annotation.Target;
 @Target({ TYPE, METHOD })
 public @interface DataSourceType {
 
-    public String value() default "";
+    public String value() default "master";
 }
